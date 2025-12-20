@@ -14,6 +14,13 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'go', 'lua', 'javascript', 'typescript' },
+  callback = function() 
+    vim.treesitter.start() 
+  end,
+})
+
 require("lazy").setup({
   spec = {
     { import = "plugins" },

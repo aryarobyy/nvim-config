@@ -106,9 +106,17 @@ return {
         winbar = false,
       },
     })
+
+    -- nvim aja, gk pakai .
+    if vim.fn.argc() == 0 then
+      -- Buka Neo-tree
+      vim.cmd("Neotree show")
+      vim.cmd("wincmd p")
+    end
+
   end,
   dependencies = { 
     'nvim-tree/nvim-web-devicons',
-    'nvim-telescope/telescope.nvim', -- untuk shortcuts
+    'nvim-telescope/telescope.nvim', 
   }
 }

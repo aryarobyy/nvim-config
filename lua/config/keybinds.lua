@@ -1,5 +1,4 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>cd", vim.cmd.Ex)
 
 -- Clipboard
 vim.opt.clipboard = 'unnamedplus'
@@ -19,3 +18,8 @@ vim.keymap.set('v', '<C-v>', '"+p', { desc = 'Paste from clipboard' })
 
 -- Cut (Ctrl+X)
 vim.keymap.set('v', '<C-x>', '"+d', { desc = 'Cut to clipboard' })
+
+-- Ctrl+S
+vim.keymap.set('n', '<C-s>', ':w<CR>', { silent = true, desc = 'Save file' })
+vim.keymap.set('i', '<C-s>', '<Esc>:w<CR>', { silent = true, desc = 'Save and exit insert mode' })
+vim.keymap.set('v', '<C-s>', '<Esc>:w<CR>', { silent = true, desc = 'Save and exit visual mode' })

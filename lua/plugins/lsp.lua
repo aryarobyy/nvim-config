@@ -64,8 +64,8 @@ return {
                 border = 'rounded',
                 header = '',
                 prefix = '',
-                max_width = 80,  -- Tambahkan ini
-                max_height = 30, -- Tambahkan ini
+                max_width = 80, 
+                max_height = 30,
             },
             signs = {
                 text = {

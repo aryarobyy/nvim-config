@@ -31,11 +31,12 @@ vim.api.nvim_create_autocmd("VimEnter", {
     if is_empty or is_directory then
       if is_directory and vim.api.nvim_buf_is_valid(0) then
         vim.api.nvim_buf_delete(0, { force = true })
+        vim.cmd("Neotree show")
+      elseif is_empty then
+        vim.schedule(function()
+          vim.cmd("Dashboard")
+        end)
       end
-
-      vim.schedule(function()
-        vim.cmd("Dashboard")
-      end)
     end
   end
 })

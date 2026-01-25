@@ -10,7 +10,8 @@ return {
       'typescript', 
       'tsx',
       'html',
-      'css' 
+      'css',
+      'prisma'
     })
 
     vim.api.nvim_create_autocmd('FileType', {
@@ -21,7 +22,8 @@ return {
         'typescript', 
         'typescriptreact', 
         'html', 
-        'css' 
+        'css',
+        'prisma'
       },
       callback = function()
         vim.treesitter.start()

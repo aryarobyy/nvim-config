@@ -125,6 +125,7 @@ return {
                 "gopls",
                 -- "dartls", 
                 "pyright",
+                "prismals",
             },
             handlers = {
                 function(server_name)

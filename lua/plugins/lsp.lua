@@ -126,10 +126,11 @@ return {
                 -- "dartls", 
                 "pyright",
                 "prismals",
+                "tailwindcss",
             },
             handlers = {
                 function(server_name)
-                    if server_name == "lua_ls" then return end
+                    if server_name == "lua_ls" or server_name == "tailwindcss" then return end
                     require('lspconfig')[server_name].setup({})
                 end,
 
@@ -171,11 +172,71 @@ return {
                     },
                 })
             end,
+
+            tailwindcss = function()
+                require('lspconfig').tailwindcss.setup({
+                    capabilities = capabilities,
+                    filetypes = {
+                        'aspnetcorerazor',
+                        'astro',
+                        'astro-markdown',
+                        'blade',
+                        'clojure',
+                        'django-html',
+                        'edde',
+                        'edge',
+                        'eelixir',
+                        'ejs',
+                        'erb',
+                        'eruby',
+                        'gohtml',
+                        'haml',
+                        'handlebars',
+                        'hbs',
+                        'html',
+                        'html-eex',
+                        'heex',
+                        'jade',
+                        'leaf',
+                        'liquid',
+                        'markdown',
+                        'mdx',
+                        'mustache',
+                        'njk',
+                        'nunjucks',
+                        'php',
+                        'pug',
+                        'razor',
+                        'slim',
+                        'statamic',
+                        'svelte',
+                        'twig',
+                        'typescriptreact',
+                        'javascriptreact',
+                        'vue',
+                        'templ',
+                    },
+                    init_options = {
+                        userLanguages = {
+                            ['templ'] = 'html',
+                        },
+                    },
+                })
+            end,
             },
         })
 
         local cmp = require('cmp')
         require('luasnip.loaders.from_vscode').lazy_load()
+
+        local ls = require("luasnip")
+        local s = ls.parser.parse_snippet
+        local react_snippet = {
+            s("rafce", "import React from 'react'\\n\\nconst ${1:ComponentName} = () => {\\n  return (\\n    <div>$0</div>\\n  )\\n}\\n\\nexport default $1")
+        }
+        for _, ft in ipairs({"javascriptreact", "typescriptreact"}) do
+            ls.add_snippets(ft, react_snippet)
+        end
 
         vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
 

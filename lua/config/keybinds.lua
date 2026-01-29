@@ -23,8 +23,3 @@ vim.keymap.set('v', '<C-x>', '"+d', { desc = 'Cut to clipboard' })
 vim.keymap.set('n', '<C-s>', ':w<CR>', { silent = true, desc = 'Save file' })
 vim.keymap.set('i', '<C-s>', '<Esc>:w<CR>', { silent = true, desc = 'Save and exit insert mode' })
 vim.keymap.set('v', '<C-s>', '<Esc>:w<CR>', { silent = true, desc = 'Save and exit visual mode' })
-
--- Find files
-vim.keymap.set('n', '<leader>pf', '<cmd>Telescope find_files<cr>', { desc = 'Find files' })
-vim.keymap.set('n', '<C-p>', '<cmd>Telescope find_files<cr>', { desc = 'Find files' })
-vim.keymap.set('n', '<leader>ps', '<cmd>Telescope live_grep<cr>', { desc = 'Live grep' })

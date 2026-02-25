@@ -46,6 +46,11 @@ vim.keymap.set('n', '<leader>r', function()
     end
 end, { desc = 'Run Python file' })
 
+
+vim.keymap.set('n', '<Tab>', ':bnext<CR>', { desc = 'Next buffer', silent = true })
+vim.keymap.set('n', '<S-Tab>', ':bprev<CR>', { desc = 'Previous buffer', silent = true })
+vim.keymap.set('n', '<leader>x', ':bdelete<CR>', { desc = 'Close buffer', silent = true })
+
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(event)
         local opts = { buffer = event.buf }

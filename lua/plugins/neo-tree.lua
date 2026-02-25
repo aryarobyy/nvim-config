@@ -12,6 +12,10 @@ return {
       popup_border_style = "rounded",
       enable_git_status = true,
       enable_diagnostics = true,
+      source_selector = {
+        winbar = true,
+        statusline = false
+      },
       
       filesystem = {
         filtered_items = {

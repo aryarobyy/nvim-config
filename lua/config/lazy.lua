@@ -19,9 +19,17 @@ require("lazy").setup({
     { import = "plugins" },
   },
   change_detection = { notify = false },
+  install = {
+    missing = true,
+    colorscheme = { "catppuccin", "habamax" },
+  },
+  ui = {
+    border = "rounded",
+  },
 })
 
-vim.api.nvim_create_autocmd("VimEnter", {
+vim.api.nvim_create_autocmd("User", {
+  pattern = "VeryLazy",
   nested = true,
   callback = function()
     local bufname = vim.api.nvim_buf_get_name(0)

@@ -44,13 +44,18 @@ return {
         })
 
         vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', function()
-            vim.cmd('stopinsert')
-            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>', true, false, true), 'n', false)
+            if vim.bo.buftype ~= "" or not vim.bo.modifiable then
+                vim.notify("Cannot save this buffer type", vim.log.levels.WARN)
+                return
+            end
 
+            vim.cmd('stopinsert')
+            
             require("conform").format({
                 lsp_format = "fallback",
                 timeout_ms = 3000,
             })
+            
             vim.cmd('write')
             print('✓ Saved and formatted!')
         end, { noremap = true, silent = true })

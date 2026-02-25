@@ -104,6 +104,10 @@ return {
         local mason_packages = vim.fn.stdpath('data') .. '/mason/packages'
         local vue_plugin_path = mason_packages .. '/vue-language-server/node_modules/@vue/language-server'
 
+        vim.lsp.config('*', {
+            capabilities = capabilities,
+        })
+
         vim.lsp.config('vtsls', {
             filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
             settings = {
@@ -123,6 +127,107 @@ return {
             },
         })
 
+        vim.lsp.config('vue_ls', {
+            init_options = {
+                typescript = {
+                    tsdk = mason_packages .. '/vtsls/node_modules/.package/node_modules/typescript/lib',
+                },
+            },
+        })
+
+        vim.lsp.config('lua_ls', {
+            settings = {
+                Lua = {
+                    runtime = {
+                        version = 'LuaJIT',
+                    },
+                    diagnostics = {
+                        globals = { 'vim' },
+                    },
+                    workspace = {
+                        library = {
+                            vim.env.VIMRUNTIME,
+                            vim.fn.stdpath('config'),
+                        },
+                        checkThirdParty = false,
+                    },
+                    telemetry = {
+                        enable = false,
+                    },
+                    hint = {
+                        enable = true,
+                        setType = true,
+                    },
+                    completion = {
+                        callSnippet = "Replace",
+                        keywordSnippet = "Replace",
+                        displayContext = 10,
+                        showWord = "Disable",
+                    },
+                    hover = {
+                        expandAlias = true,
+                    },
+                },
+            },
+        })
+
+        vim.lsp.config('tailwindcss', {
+            filetypes = {
+                'aspnetcorerazor',
+                'astro',
+                'astro-markdown',
+                'blade',
+                'clojure',
+                'django-html',
+                'edde',
+                'edge',
+                'eelixir',
+                'ejs',
+                'erb',
+                'eruby',
+                'gohtml',
+                'haml',
+                'handlebars',
+                'hbs',
+                'html',
+                'html-eex',
+                'heex',
+                'jade',
+                'leaf',
+                'liquid',
+                'markdown',
+                'mdx',
+                'mustache',
+                'njk',
+                'nunjucks',
+                'php',
+                'pug',
+                'razor',
+                'slim',
+                'statamic',
+                'svelte',
+                'twig',
+                'typescriptreact',
+                'javascriptreact',
+                'vue',
+                'templ',
+            },
+            init_options = {
+                userLanguages = {
+                    ['templ'] = 'html',
+                },
+            },
+        })
+
+        vim.lsp.config('eslint', {
+            settings = {
+                workingDirectory = { mode = 'auto' },
+                rulesCustomizations = {
+                    { rule = 'import/no-unresolved', severity = 'off' },
+                },
+            },
+        })
+
         require('mason-lspconfig').setup({
             ensure_installed = {
                 "lua_ls",
@@ -135,133 +240,6 @@ return {
                 "pyright",
                 "prismals",
                 "tailwindcss",
-            },
-            handlers = {
-                function(server_name)
-                    require('lspconfig')[server_name].setup({
-                        capabilities = capabilities,
-                    })
-                end,
-
-                -- ts_ls = function() end,
-
-                vtsls = function()
-                    require('lspconfig').vtsls.setup({
-                        capabilities = capabilities,
-                        filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-                        settings = {
-                            vtsls = {
-                                tsserver = {
-                                    globalPlugins = {
-                                        {
-                                            name = "@vue/typescript-plugin",
-                                            location = vue_plugin_path,
-                                            languages = { "vue" },
-                                            configNamespace = "typescript",
-                                            enableForWorkspaceTypeScriptVersions = true,
-                                        },
-                                    },
-                                },
-                            },
-                        },
-                    })
-                end,
-
-                vue_ls = function()
-                    require('lspconfig').vue_ls.setup({
-                        capabilities = capabilities,
-                    })
-                end,
-
-                lua_ls = function()
-                    require('lspconfig').lua_ls.setup({
-                        capabilities = capabilities,
-                        settings = {
-                            Lua = {
-                                runtime = {
-                                    version = 'LuaJIT',
-                                },
-                                diagnostics = {
-                                    globals = { 'vim' },
-                                },
-                                workspace = {
-                                    library = {
-                                        vim.env.VIMRUNTIME,
-                                        vim.fn.stdpath('config'),
-                                    },
-                                    checkThirdParty = false,
-                                },
-                                telemetry = {
-                                    enable = false,
-                                },
-                                hint = {
-                                    enable = true,
-                                    setType = true,
-                                },
-                                completion = {
-                                    callSnippet = "Replace",
-                                    keywordSnippet = "Replace",
-                                    displayContext = 10,
-                                    showWord = "Disable",
-                                },
-                                hover = {
-                                    expandAlias = true,
-                                },
-                            },
-                        },
-                    })
-                end,
-
-                tailwindcss = function()
-                    require('lspconfig').tailwindcss.setup({
-                        capabilities = capabilities,
-                        filetypes = {
-                            'aspnetcorerazor',
-                            'astro',
-                            'astro-markdown',
-                            'blade',
-                            'clojure',
-                            'django-html',
-                            'edde',
-                            'edge',
-                            'eelixir',
-                            'ejs',
-                            'erb',
-                            'eruby',
-                            'gohtml',
-                            'haml',
-                            'handlebars',
-                            'hbs',
-                            'html',
-                            'html-eex',
-                            'heex',
-                            'jade',
-                            'leaf',
-                            'liquid',
-                            'markdown',
-                            'mdx',
-                            'mustache',
-                            'njk',
-                            'nunjucks',
-                            'php',
-                            'pug',
-                            'razor',
-                            'slim',
-                            'statamic',
-                            'svelte',
-                            'twig',
-                            'typescriptreact',
-                            'javascriptreact',
-                            'vue',
-                            'templ',
-                        },
-                        init_options = {
-                            userLanguages = {
-                                ['templ'] = 'html',
-                            },
-                        },
-                    })
-                end,
             },
         })
 

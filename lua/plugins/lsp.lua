@@ -27,8 +27,12 @@ return {
                     vim.api.nvim_create_autocmd("BufWritePre", {
                         buffer = args.buf,
                         callback = function()
+                            vim.lsp.buf.code_action({
+                                context = { only = { "source.organizeImports" } },
+                                apply = true,
+                            })
                             vim.lsp.buf.format({
-                                formatting_options = { tabSize = 4, insertSpaces = true },
+                                formatting_options = { tabSize = 2, insertSpaces = true },
                                 bufnr = args.buf,
                                 id = client.id
                             })
@@ -224,6 +228,20 @@ return {
                 workingDirectory = { mode = 'auto' },
                 rulesCustomizations = {
                     { rule = 'import/no-unresolved', severity = 'off' },
+                },
+            },
+        })
+
+        vim.lsp.config('gopls', {
+            cmd = { "/home/aryarobyy/go/bin/gopls" },
+            settings = {
+                gopls = {
+                    analyses = {
+                        unusedparams = true,
+                    },
+                    gofumpt = true,
+                    semanticTokens = true,
+                    staticcheck = true,
                 },
             },
         })

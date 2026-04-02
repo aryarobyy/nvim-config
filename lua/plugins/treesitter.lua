@@ -26,7 +26,7 @@ return {
         'prisma'
       },
       callback = function()
-        vim.treesitter.start()
+        pcall(vim.treesitter.start)
       end,
     })
   end,

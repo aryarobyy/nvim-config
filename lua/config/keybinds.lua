@@ -1,5 +1,44 @@
 vim.g.mapleader = " "
 
+local function pick_replacement_buffer(current_bufnr)
+    local alternate = vim.fn.bufnr("#")
+    if alternate > 0 and alternate ~= current_bufnr and vim.fn.buflisted(alternate) == 1 then
+        return alternate
+    end
+
+    for _, info in ipairs(vim.fn.getbufinfo({ buflisted = 1 })) do
+        if info.bufnr ~= current_bufnr and vim.api.nvim_buf_is_valid(info.bufnr) then
+            return info.bufnr
+        end
+    end
+end
+
+local function close_current_buffer()
+    local bufnr = vim.api.nvim_get_current_buf()
+    if vim.bo[bufnr].modified then
+        vim.notify("Buffer has unsaved changes", vim.log.levels.WARN)
+        return
+    end
+
+    local replacement = pick_replacement_buffer(bufnr)
+
+    if replacement then
+        vim.api.nvim_win_set_buf(0, replacement)
+    else
+        local wins = vim.api.nvim_tabpage_list_wins(0)
+        if #wins > 1 then
+            vim.cmd("close")
+        else
+            vim.cmd("enew")
+        end
+    end
+
+    local ok, err = pcall(vim.api.nvim_buf_delete, bufnr, { force = false })
+    if not ok then
+        vim.notify("Could not close buffer: " .. tostring(err), vim.log.levels.WARN)
+    end
+end
+
 -- Clipboard
 vim.opt.clipboard = 'unnamedplus'
 
@@ -49,7 +88,7 @@ end, { desc = 'Run Python file' })
 
 vim.keymap.set('n', '<Tab>', ':bnext<CR>', { desc = 'Next buffer', silent = true })
 vim.keymap.set('n', '<S-Tab>', ':bprev<CR>', { desc = 'Previous buffer', silent = true })
-vim.keymap.set('n', '<leader>x', ':bdelete<CR>', { desc = 'Close buffer', silent = true })
+vim.keymap.set('n', '<leader>x', close_current_buffer, { desc = 'Close buffer', silent = true })
 
 vim.api.nvim_create_autocmd('LspAttach', {
     callback = function(event)

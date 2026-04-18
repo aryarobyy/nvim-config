@@ -7,7 +7,7 @@ return {
   },
   config = function()
     require("go").setup({
-      tag_options = "",
+      tag_options = "json=omitempty",
     })
   end,
   event = {"CmdlineEnter"},

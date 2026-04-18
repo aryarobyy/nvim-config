@@ -10,7 +10,7 @@ return {
         show_close_icon = true,
         color_icons = true,
         view = "default",
-        separator_style = "slant",
+        separator_style = "thin",
         hover = {
           enabled = true,
           delay = 200,

@@ -258,6 +258,7 @@ return {
                 "pyright",
                 "prismals",
                 "tailwindcss",
+                "svelte",
             },
         })
 

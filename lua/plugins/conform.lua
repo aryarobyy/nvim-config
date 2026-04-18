@@ -24,6 +24,13 @@ return {
                 lua = { "stylua" },
 
                 prisma = { "prettier" },
+                svelte = { "prettier" },
+            },
+
+            formatters = {
+                stylua = {
+                    prepend_args = { "--indent-type", "Spaces", "--indent-width", "2" },
+                },
             },
 
             format_on_save = {
@@ -43,25 +50,7 @@ return {
             notify_no_formatters = true,
         })
 
-        vim.keymap.set({ 'n', 'i', 'v' }, '<C-s>', function()
-            if vim.bo.buftype ~= "" or not vim.bo.modifiable then
-                vim.notify("Cannot save this buffer type", vim.log.levels.WARN)
-                return
-            end
-
-            vim.cmd('stopinsert')
-            
-            require("conform").format({
-                lsp_format = "fallback",
-                timeout_ms = 3000,
-            })
-            
-            vim.cmd('write')
-            print('✓ Saved and formatted!')
-        end, { noremap = true, silent = true })
-
         vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
         vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = "Next diagnostic" })
     end,
 }
-

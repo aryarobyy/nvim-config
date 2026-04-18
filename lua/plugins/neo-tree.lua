@@ -38,6 +38,14 @@ return {
           ["<space>"] = "none",
           ["l"] = "open",
           ["h"] = "close_node",
+          ["M"] = {
+            "move",
+            config = {
+              show_path = "relative",
+            },
+          },
+          ["X"] = "cut_to_clipboard",
+          ["P"] = "paste_from_clipboard",
         },
       },
     })
